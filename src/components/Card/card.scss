@@ -1,0 +1,29 @@
+.card {
+    width: 150px;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    transition: transform 0.2s;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+
+    &.light-orange { background-color: #ffcc80; }
+    &.light-blue { background-color: #80d8ff; }
+    &.light-yellow { background-color: #fff59d; }
+    &.light-green { background-color: #ccff90; }
+    &.light-pink { background-color: #ff80ab; }
+    &.light-purple { background-color: #b388ff; }
+    &.light-red { background-color: #ff8a80; }
+    &.light-teal { background-color: #80cbc4; }
+    &.light-brown { background-color: #bcaaa4; }
+    &.light-gray { background-color: #cfd8dc; }
+}

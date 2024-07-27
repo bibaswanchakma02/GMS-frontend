@@ -1,0 +1,52 @@
+.home-container {
+    display: flex;
+}
+
+.left-section {
+    width: 200px;
+    background-color: #f8f9fa;
+    padding: 20px;
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 4px;
+            margin-bottom: 5px;
+
+            &:hover, &.active {
+                background-color: #007bff;
+                color: white;
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    }
+}
+
+.right-section {
+    width: 80%;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .cards-container {
+        width: 60%;
+        text-align: center;
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+    }
+}

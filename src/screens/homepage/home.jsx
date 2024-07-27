@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 import ProfileDetails from '../../components/profileDetails/profileDetails';
+import AddUserForm from '../../components/AddUserForm/addform';
 
 const Home = () => {
     const { auth, logout } = useAuth();
@@ -151,7 +152,7 @@ const Home = () => {
                 {activeTab === 'viewTrainers' && <div>View Trainers</div>}
                 {activeTab === 'allMembers' && <div>All Members</div>}
                 {activeTab === 'allTrainers' && <div>All Trainers</div>}
-                {activeTab === 'addMember' && <div>Add New Member</div>}
+                {activeTab === 'addMember' && <AddUserForm/>}
                 {activeTab === 'addMembership' && <div>Add New Membership Package</div>}
                 {activeTab === 'viewPackages' && <div>View All Membership Packages</div>}
                 {activeTab === 'assignedMembers' && <div>Assigned Members</div>}

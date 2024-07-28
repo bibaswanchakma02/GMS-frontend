@@ -18,7 +18,7 @@ const ProfileDetails = () => {
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axiosInstance.get('/api/v1/profile', {
+                const response = await axiosInstance.get('/profile', {
                     headers: {
                         Authorization: `Bearer ${auth.token}`
                     }
@@ -51,7 +51,7 @@ const ProfileDetails = () => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.put('http://localhost:8080/api/v1/profile', updatedProfile, {
+            const response = await axios.put('/profile', updatedProfile, {
                 headers: {
                     Authorization: `Bearer ${auth.token}`
                 }

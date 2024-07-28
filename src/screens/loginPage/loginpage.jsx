@@ -16,7 +16,7 @@ const Loginpage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post('/api/v1/auth/login', { username, password });
+            const response = await axios.post('/auth/login', { username, password });
 
             if (response.status === 200) {
                 const { responseString: token } = response.data;

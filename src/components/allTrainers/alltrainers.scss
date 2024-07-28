@@ -1,0 +1,61 @@
+.all-trainers {
+    width: 100%;
+    padding: 20px;
+
+    h2 {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .error {
+        color: red;
+        margin-bottom: 20px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+
+        li {
+            margin-bottom: 10px;
+        }
+    }
+
+    .trainer-card {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
+        width: 100%;
+        transition: transform 0.2s;
+        &:hover {
+            cursor: pointer;
+            transform: scale(1.02);
+        }
+
+        img {
+            border-radius: 50%;
+            height: 50px;
+            width: 50px;
+            margin-right: 20px;
+        }
+
+        .trainer-details {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+
+            h3 {
+                margin: 0;
+                font-size: 18px;
+            }
+
+            p {
+                margin: 0;
+                color: #666;
+            }
+        }
+    }
+}

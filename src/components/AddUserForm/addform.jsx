@@ -1,7 +1,7 @@
-import './addform.scss'
-import React, { useState } from 'react';
-import axiosInstance from '../../config/axiosconfig'
 
+import './addform.scss';
+import React, { useState, useEffect } from 'react';
+import axiosInstance from '../../config/axiosconfig';
 
 const AddUserForm = () => {
     const [formData, setFormData] = useState({
@@ -11,8 +11,24 @@ const AddUserForm = () => {
         mobileNo: '',
         email: '',
         packageName: 'Basic',
-        image: ''
+        image: '',
+        role: 'USER',
+        assignedTrainer: ''
     });
+
+    const [trainers, setTrainers] = useState([]);
+
+    useEffect(() => {
+        const fetchTrainers = async () => {
+            try {
+                const response = await axiosInstance.get('/admin/getalltrainers');
+                setTrainers(response.data);
+            } catch (error) {
+                console.error('Error fetching trainers:', error);
+            }
+        };
+        fetchTrainers();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -36,18 +52,25 @@ const AddUserForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        console.log(formData);
         try {
-            const response = await axiosInstance.post('/api/v1/admin/addmember', formData);
+            const response = await axiosInstance.post('/admin/addmember', formData, {
+                headers: {
+                    Authorization: `Bearer ${localStorage.getItem('token')}`
+                }
+            });
             console.log(response.data);
-            alert("User registered successfully!")
+            alert("User registered successfully!");
             setFormData({
                 username: '',
                 fullName: '',
                 password: '',
                 mobileNo: '',
                 email: '',
-                package: 'Basic',
-                image: ''
+                packageName: 'Basic',
+                image: '',
+                assignedTrainer: '',
+                role: ''
             });
         } catch (error) {
             console.error('Error adding user:', error);
@@ -96,7 +119,7 @@ const AddUserForm = () => {
                 <div className="form-group">
                     <label htmlFor="mobileNo">Mobile No</label>
                     <input
-                        type="tel"
+                        type="number"
                         id="mobileNo"
                         name="mobileNo"
                         value={formData.mobileNo}
@@ -118,17 +141,49 @@ const AddUserForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="package">Package</label>
+                    <label htmlFor="packageName">Package</label>
                     <select
-                        id="package"
-                        name="package"
-                        value={formData.package}
+                        id="packageName"
+                        name="packageName"
+                        value={formData.packageName}
                         onChange={handleChange}
+                        required
                     >
                         <option value="Basic">Basic</option>
                         <option value="Premium">Premium</option>
                     </select>
+                </div>
 
+                <div className="form-group">
+                    <label htmlFor="assignedTrainer">Trainer</label>
+                    <select
+                        id="assignedTrainer"
+                        name="assignedTrainer"
+                        value={formData.assignedTrainer}
+                        onChange={handleChange}
+                    >
+                        <option value="">Select Trainer</option>
+                        {trainers.map((trainer) => (
+                            <option key={trainer.id} value={trainer.username}>
+                                {trainer.fullName || trainer.username}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="role">User Type</label>
+                    <select
+                        id="role"
+                        name="role"
+                        value={formData.role}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="USER">Member</option>
+                        <option value="TRAINER">Trainer</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
                 </div>
 
                 <div className="form-group">
@@ -139,6 +194,7 @@ const AddUserForm = () => {
                         name="image"
                         accept="image/*"
                         onChange={handleImageChange}
+                        required
                     />
                 </div>
 

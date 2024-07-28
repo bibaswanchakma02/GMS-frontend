@@ -1,8 +1,65 @@
+// .add-user-form {
+//     background-color: #ffffff;
+//     border-radius: 12px;
+//     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+//     max-width: 600px;
+//     margin: 30px auto;
+//     padding: 30px;
+//     display: flex;
+//     flex-direction: column;
+//     gap: 20px;
+// }
+
+// h2 {
+//     text-align: center;
+//     color: #000;
+// }
+
+// .form-group {
+//     display: flex;
+//     flex-direction: column;
+//     gap: 10px;
+// }
+
+// label {
+//     font-weight: 600;
+//     color: #000;
+
+// }
+
+// input, select {
+//     padding: 12px;
+//     border: 1px solid #ddd;
+//     border-radius: 8px;
+//     font-size: 16px;
+//     color: #333;
+//     background-color: #f9f9f9;
+    
+// }
+
+// button {
+//     background-color: #4fc3f7;
+//     color: white;
+//     border: none;
+//     padding: 14px 28px;
+//     border-radius: 8px;
+//     cursor: pointer;
+//     font-size: 16px;
+//     transition: background-color 0.3s, transform 0.2s;
+//     margin-top: 10px;
+// }
+
+// button:hover {
+//     background-color: #29b6f6;
+//     transform: translateY(-2px);
+// }
+
 .add-user-form {
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    max-width: 600px;
+    width: 100%;
+    max-width: 900px;
     margin: 30px auto;
     padding: 30px;
     display: flex;
@@ -24,7 +81,6 @@ h2 {
 label {
     font-weight: 600;
     color: #000;
-
 }
 
 input, select {
@@ -34,7 +90,6 @@ input, select {
     font-size: 16px;
     color: #333;
     background-color: #f9f9f9;
-    
 }
 
 button {
@@ -53,3 +108,4 @@ button:hover {
     background-color: #29b6f6;
     transform: translateY(-2px);
 }
+

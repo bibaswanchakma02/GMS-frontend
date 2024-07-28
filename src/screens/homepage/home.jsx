@@ -5,23 +5,55 @@ import { useNavigate } from 'react-router-dom';
 import Card from '../../components/Card/Card';
 import ProfileDetails from '../../components/profileDetails/profileDetails';
 import AddUserForm from '../../components/AddUserForm/addform';
+import AllMembers from '../../components/allMembers/AllMembers';
+import MemberProfileDetails from '../../components/memberprofiledetails/memberdetails';
+import AllTrainers from '../../components/allTrainers/AllTrainers';
+import TrainerProfileDetails from '../../components/trainerProfileDetails/trainerprofiledetails';
+
 
 const Home = () => {
     const { auth, logout } = useAuth();
     const [activeTab, setActiveTab] = useState('home');
+    const [selectedMemberUsername, setSelectedMemberUsername] = useState(null);
+    const [selectedTrainerUsername, setSelectedTrainerUsername] = useState(null);
+    
     const navigate = useNavigate();
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
+        
     }
+    
     const handleCardClick = (tab) => {
         setActiveTab(tab);
     };
+
+    const handleSelectMember = (username) => {
+        setSelectedMemberUsername(username);
+        setActiveTab('memberProfileDetails');
+    };
+
+    const handleSelectTrainer = (username) => {
+        setSelectedTrainerUsername(username);
+        setActiveTab('trainerProfileDetails');
+    };
+   
 
     const handleLogout = () => {
         logout();
         navigate('/');
     }
+
+    const handleBackToMembers = () => {
+        setActiveTab('allMembers');
+        setSelectedMemberUsername(null);
+    };
+   
+    const handleBackToTrainers = () => {
+        setActiveTab('allTrainers');
+        setSelectedTrainerUsername(null);
+    };
+    
 
 
     return (
@@ -150,13 +182,21 @@ const Home = () => {
                 
                 {activeTab === 'profile' && <ProfileDetails/>}
                 {activeTab === 'viewTrainers' && <div>View Trainers</div>}
-                {activeTab === 'allMembers' && <div>All Members</div>}
-                {activeTab === 'allTrainers' && <div>All Trainers</div>}
+                {activeTab === 'allMembers' && <AllMembers onSelectMember={handleSelectMember} />}
+                {activeTab === 'allTrainers' && <AllTrainers onSelectTrainer={handleSelectTrainer}/>}
                 {activeTab === 'addMember' && <AddUserForm/>}
                 {activeTab === 'addMembership' && <div>Add New Membership Package</div>}
                 {activeTab === 'viewPackages' && <div>View All Membership Packages</div>}
                 {activeTab === 'assignedMembers' && <div>Assigned Members</div>}
                 {activeTab === 'newRequests' && <div>New Requests</div>}
+                {activeTab === 'memberProfileDetails' && selectedMemberUsername && (
+                    <MemberProfileDetails username={selectedMemberUsername} onBack={handleBackToMembers}/> 
+                )}
+                {activeTab === 'trainerProfileDetails' && selectedTrainerUsername && (
+                    <TrainerProfileDetails username={selectedTrainerUsername} onBack={handleBackToTrainers} />
+                )}
+                
+                
             </div>
         </div>
     )

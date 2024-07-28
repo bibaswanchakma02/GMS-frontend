@@ -1,0 +1,116 @@
+.trainer-profile-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+    background-color: #f7f7f7;
+    width: 100%;
+
+    .trainer-info {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #fff;
+        padding: 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        margin-bottom: 2rem;
+        text-align: center;
+
+        img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            margin-bottom: 0.5rem;
+        }
+
+        p {
+            margin: 0.3rem 0;
+        }
+    }
+
+    .error {
+        color: red;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    button {
+        background-color: #64b5f6;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 1rem;
+
+        &:hover {
+            background-color: #42a5f5;
+        }
+    }
+    .remove-user-button {
+        background-color: #e57373;
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 1rem;
+
+        &:hover {
+            background-color: #ef5350;
+        }
+    }
+    .dialog {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .dialog-content {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+            p {
+                margin-bottom: 1rem;
+            }
+
+            .confirm-button,
+            .cancel-button {
+                background-color: #64b5f6;
+                color: #fff;
+                border: none;
+                padding: 0.5rem 1rem;
+                border-radius: 4px;
+                cursor: pointer;
+                margin: 0 0.5rem;
+
+                &:hover {
+                    background-color: #42a5f5;
+                }
+            }
+
+            .confirm-button {
+                background-color: #e57373;
+
+                &:hover {
+                    background-color: #ef5350;
+                }
+            }
+        }
+    }
+}

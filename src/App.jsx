@@ -5,6 +5,7 @@ import Layout from './screens/layout/layout'
 import { AuthProvider } from './context/AuthContext'
 import Home from './screens/homepage/home'
 import ProtectedRoute from './config/ProtectedRoute'
+import PasswordResetPage from './screens/passwordReset/passwordReset'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,6 +22,10 @@ function App() {
         {
           path: '/main',
           element: <ProtectedRoute element={<Home/>}/>
+        },
+        {
+          path: '/password/reset',
+          element: <ProtectedRoute element={<PasswordResetPage/>}/>
         }
       ]
     }

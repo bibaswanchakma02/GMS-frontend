@@ -1,11 +1,13 @@
 import './memberdetails.scss'
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../config/axiosconfig'
+import Loader from '../loader/loader';
 
 const MemberProfileDetails = ({ username, onBack }) => {
     const [member, setMember] = useState(null);
     const [error, setError] = useState('');
     const [showDialog, setShowDialog] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const handleRemoveUser = async () => {
         try {
@@ -27,11 +29,16 @@ const MemberProfileDetails = ({ username, onBack }) => {
             } catch (error) {
                 console.error('Error fetching member details:', error);
                 setError('Failed to fetch member details. Please try again.');
+            }finally{
+                setLoading(false);
             }
         };
 
         fetchMemberDetails();
     }, [username]);
+    if(loading){
+        return <Loader/>
+    }
 
     if (error) {
         return <div className="error">{error}</div>;
@@ -59,7 +66,7 @@ const MemberProfileDetails = ({ username, onBack }) => {
                     <p><strong>Package Name:</strong> {member.membership.packageName}</p>
                     <details>
                         <summary>More Details</summary>
-                        <p><strong>Price:</strong> ${member.membership.price}</p>
+                        <p><strong>Price:</strong> ₹ {member.membership.price}</p>
                         <p><strong>Payment Status:</strong> {member.membership.paymentStatus ? 'Paid' : 'Unpaid'}</p>
                         <p><strong>Renewal Status:</strong> {member.membership.renewalStatus ? 'Renewed' : 'Not Renewed'}</p>
                         <p><strong>Duration:</strong> {member.membership.duration} days</p>

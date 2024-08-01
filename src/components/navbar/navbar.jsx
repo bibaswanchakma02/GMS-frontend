@@ -8,7 +8,7 @@ const Navbar = () => {
     return (
         <nav>
             <div className='navbar'>
-                <h1><span>Gym management System</span></h1>
+                <h1><span>Fitness Centre</span></h1>
             </div>
         </nav>
     )

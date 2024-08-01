@@ -10,24 +10,37 @@ const AddUserForm = () => {
         password: '',
         mobileNo: '',
         email: '',
-        packageName: 'Basic',
+        packageName: '',
         image: '',
         role: 'USER',
         assignedTrainer: ''
     });
 
+    const [membership, setMembership] = useState([]);
     const [trainers, setTrainers] = useState([]);
 
     useEffect(() => {
         const fetchTrainers = async () => {
             try {
-                const response = await axiosInstance.get('/admin/getalltrainers');
+                const response = await axiosInstance.get('/getalltrainers');
+                console.log(response.data)
                 setTrainers(response.data);
+                
             } catch (error) {
                 console.error('Error fetching trainers:', error);
             }
         };
+
+        const fetchMembershipDetails = async () => {
+            try {
+                const membershipResponse = await axiosInstance.get('/membership/getall');
+                setMembership(membershipResponse.data);
+            } catch (error) {
+                console.log('Error fetching membership', error);
+            }
+        }
         fetchTrainers();
+        fetchMembershipDetails();
     }, []);
 
     const handleChange = (e) => {
@@ -149,8 +162,13 @@ const AddUserForm = () => {
                         onChange={handleChange}
                         required
                     >
-                        <option value="Basic">Basic</option>
-                        <option value="Premium">Premium</option>
+
+                        <option value="">Select Package</option>
+                        {membership.map((membership) => (
+                            <option key={membership.id} value={membership.packageName}>
+                                {membership.packageName}
+                            </option>
+                        ))}
                     </select>
                 </div>
 

@@ -9,6 +9,8 @@ import AllMembers from '../../components/allMembers/AllMembers';
 import MemberProfileDetails from '../../components/memberprofiledetails/memberdetails';
 import AllTrainers from '../../components/allTrainers/AllTrainers';
 import TrainerProfileDetails from '../../components/trainerProfileDetails/trainerprofiledetails';
+import ViewAllMemberships from '../../components/Allmemberships/allmemberships';
+import AddMembershipForm from '../../components/AddMembershipForm/addmembership';
 
 
 const Home = () => {
@@ -16,14 +18,14 @@ const Home = () => {
     const [activeTab, setActiveTab] = useState('home');
     const [selectedMemberUsername, setSelectedMemberUsername] = useState(null);
     const [selectedTrainerUsername, setSelectedTrainerUsername] = useState(null);
-    
+
     const navigate = useNavigate();
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
-        
+
     }
-    
+
     const handleCardClick = (tab) => {
         setActiveTab(tab);
     };
@@ -37,7 +39,7 @@ const Home = () => {
         setSelectedTrainerUsername(username);
         setActiveTab('trainerProfileDetails');
     };
-   
+
 
     const handleLogout = () => {
         logout();
@@ -48,12 +50,12 @@ const Home = () => {
         setActiveTab('allMembers');
         setSelectedMemberUsername(null);
     };
-   
+
     const handleBackToTrainers = () => {
         setActiveTab('allTrainers');
         setSelectedTrainerUsername(null);
     };
-    
+
 
 
     return (
@@ -73,12 +75,21 @@ const Home = () => {
                         My profile
                     </li>
                     {auth.role === 'USER' && (
-                        <li
-                            className={activeTab === 'viewTrainers' ? 'active' : ''}
-                            onClick={() => handleTabClick('viewTrainers')}
-                        >
-                            View Trainers
-                        </li>
+                        <>
+                            <li
+                                className={activeTab === 'viewTrainers' ? 'active' : ''}
+                                onClick={() => handleTabClick('allTrainers')}
+                            >
+                                View Trainers
+                            </li>
+                            <li
+                                className={activeTab === 'renewMembership' ? 'active' : ''}
+                                onClick={() => handleTabClick('renewMembership')}
+                            >
+                                Renew Membership
+                            </li>
+                        </>
+
                     )}
                     {auth.role === 'ADMIN' && (
                         <>
@@ -134,18 +145,23 @@ const Home = () => {
                 </ul>
             </div>
             <div className="right-section">
-            {activeTab === 'home' && (
+                {activeTab === 'home' && (
                     <div className="cards-container">
                         <h2>Get started...</h2>
                         <div className="cards">
-                            
+
                             <Card color="light-blue" onClick={() => handleCardClick('profile')}>
                                 My Profile
                             </Card>
                             {auth.role === 'USER' && (
-                                <Card color="light-yellow" onClick={() => handleCardClick('viewTrainers')}>
-                                    View Trainers
-                                </Card>
+                                <>
+                                    <Card color="light-yellow" onClick={() => handleCardClick('allTrainers')}>
+                                        View Trainers
+                                    </Card>
+                                    <Card color="light-green" onClick={() => handleCardClick('renewMembership')}>
+                                        Renew Membership
+                                    </Card>
+                                </>
                             )}
                             {auth.role === 'ADMIN' && (
                                 <>
@@ -179,24 +195,25 @@ const Home = () => {
                         </div>
                     </div>
                 )}
-                
-                {activeTab === 'profile' && <ProfileDetails/>}
-                {activeTab === 'viewTrainers' && <div>View Trainers</div>}
+
+                {activeTab === 'profile' && <ProfileDetails />}
+                {activeTab === 'viewTrainers' && <AllTrainers onSelectTrainer={handleSelectTrainer} />}
                 {activeTab === 'allMembers' && <AllMembers onSelectMember={handleSelectMember} />}
-                {activeTab === 'allTrainers' && <AllTrainers onSelectTrainer={handleSelectTrainer}/>}
-                {activeTab === 'addMember' && <AddUserForm/>}
-                {activeTab === 'addMembership' && <div>Add New Membership Package</div>}
-                {activeTab === 'viewPackages' && <div>View All Membership Packages</div>}
+                {activeTab === 'allTrainers' && <AllTrainers onSelectTrainer={handleSelectTrainer} />}
+                {activeTab === 'addMember' && <AddUserForm />}
+                {activeTab === 'addMembership' && <AddMembershipForm />}
+                {activeTab === 'viewPackages' && <ViewAllMemberships />}
+                {activeTab === 'renewMembership' && <ViewAllMemberships isRenewal={true} />}
                 {activeTab === 'assignedMembers' && <div>Assigned Members</div>}
                 {activeTab === 'newRequests' && <div>New Requests</div>}
                 {activeTab === 'memberProfileDetails' && selectedMemberUsername && (
-                    <MemberProfileDetails username={selectedMemberUsername} onBack={handleBackToMembers}/> 
+                    <MemberProfileDetails username={selectedMemberUsername} onBack={handleBackToMembers} />
                 )}
                 {activeTab === 'trainerProfileDetails' && selectedTrainerUsername && (
                     <TrainerProfileDetails username={selectedTrainerUsername} onBack={handleBackToTrainers} />
                 )}
-                
-                
+
+
             </div>
         </div>
     )

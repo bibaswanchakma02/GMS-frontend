@@ -1,36 +1,34 @@
+// ProfileDetails.js
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import axiosInstance from '../../config/axiosconfig'
+import axiosInstance from '../../config/axiosconfig';  
 import { useAuth } from '../../context/AuthContext';
 import './profileDetails.scss';
+import Loader from '../loader/loader';
 
 const ProfileDetails = () => {
     const { auth } = useAuth();
     const [profile, setProfile] = useState(null);
     const [membershipExpanded, setMembershipExpanded] = useState(false);
     const [isEditing, setIsEditing] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [updatedProfile, setUpdatedProfile] = useState({
-        fullName: '',
-        mobileNo: '',
+        username: '',
         email: ''
     });
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
-                const response = await axiosInstance.get('/profile', {
-                    headers: {
-                        Authorization: `Bearer ${auth.token}`
-                    }
-                });
+                const response = await axiosInstance.get('/profile');
                 setProfile(response.data);
                 setUpdatedProfile({
-                    fullName: response.data.fullName || '',
-                    mobileNo: response.data.mobileNo || '',
+                    username: response.data.username || '',
                     email: response.data.email || ''
                 });
             } catch (error) {
                 console.error('Error fetching profile:', error);
+            }finally{
+                setLoading(false);
             }
         };
         fetchProfile();
@@ -51,7 +49,7 @@ const ProfileDetails = () => {
 
     const handleSave = async () => {
         try {
-            const response = await axios.put('/profile', updatedProfile, {
+            const response = await axiosInstance.put('/profile', updatedProfile, {
                 headers: {
                     Authorization: `Bearer ${auth.token}`
                 }
@@ -63,9 +61,9 @@ const ProfileDetails = () => {
         }
     };
 
-    if (!profile) {
-        return <div>Loading...</div>;
-    }
+   if(loading){
+    return <Loader/>
+   }
 
     const {
         username,
@@ -82,33 +80,32 @@ const ProfileDetails = () => {
             <div className="profile-header">
                 {image ? <img src={image} alt="Profile" className="profile-image" /> : <div className="profile-placeholder">No Image</div>}
                 <div className="profile-info">
-                    <h2>{username}</h2>
                     {isEditing ? (
                         <>
-                            <input
-                                type="text"
-                                name="fullName"
-                                value={updatedProfile.fullName}
-                                onChange={handleInputChange}
-                                placeholder="Full Name"
-                            />
-                            <input
-                                type="text"
-                                name="mobileNo"
-                                value={updatedProfile.mobileNo}
-                                onChange={handleInputChange}
-                                placeholder="Mobile No"
-                            />
-                            <input
-                                type="email"
-                                name="email"
-                                value={updatedProfile.email}
-                                onChange={handleInputChange}
-                                placeholder="Email"
-                            />
+                            <div className="edit-field">
+                                <label htmlFor="username">Username:</label>
+                                <input
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    value={updatedProfile.username}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
+                            <div className="edit-field">
+                                <label htmlFor="email">Email:</label>
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    value={updatedProfile.email}
+                                    onChange={handleInputChange}
+                                />
+                            </div>
                         </>
                     ) : (
                         <>
+                            <h2>{username}</h2>
                             {fullName && <p>Full Name: {fullName}</p>}
                             <p>Mobile No: {mobileNo}</p>
                             <p>Email: {email}</p>
@@ -117,10 +114,10 @@ const ProfileDetails = () => {
                     {assignedTrainer && <p>Assigned Trainer: {assignedTrainer}</p>}
                 </div>
             </div>
-            <button onClick={handleEditToggle}>
+            <button className="edit-button" onClick={handleEditToggle}>
                 {isEditing ? 'Cancel' : 'Edit Profile'}
             </button>
-            {isEditing && <button onClick={handleSave}>Save</button>}
+            {isEditing && <button className="save-button" onClick={handleSave}>Save</button>}
             {(auth.role === 'USER' || auth.role === 'TRAINER') && membership && (
                 <div className="membership-section">
                     <div className="membership-header" onClick={handleMembershipToggle}>
@@ -129,7 +126,7 @@ const ProfileDetails = () => {
                     </div>
                     {membershipExpanded && (
                         <div className="membership-details">
-                            <p>Price: ${membership.price}</p>
+                            <p>Price: ₹ {membership.price}</p>
                             <p>Payment Status: {membership.paymentStatus ? 'Paid' : 'Pending'}</p>
                             <p>Renewal Status: {membership.renewalStatus ? 'Renewed' : 'Not Renewed'}</p>
                             <p>Duration: {membership.duration} days</p>

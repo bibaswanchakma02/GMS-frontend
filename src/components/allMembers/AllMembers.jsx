@@ -1,11 +1,13 @@
 import './allMembers.scss'
 import axiosInstance from '../../config/axiosconfig'
 import { useEffect, useState } from 'react';
+import Loader from '../loader/loader';
 
 
 const AllMembers = ({ onSelectMember }) => {
     const [members, setMembers] = useState([]);
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchMembers = async () => {
@@ -16,11 +18,17 @@ const AllMembers = ({ onSelectMember }) => {
             } catch (error) {
                 console.error('Error fetching members:', error);
                 setError('Failed to fetch members. Please try again.');
+            }finally{
+                setLoading(false)
             }
         };
 
         fetchMembers();
     }, []);
+
+    if(loading){
+        return <Loader/>
+    }
 
     return (
         <div className="all-members">

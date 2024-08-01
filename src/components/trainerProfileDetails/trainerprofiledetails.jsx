@@ -1,11 +1,13 @@
 import './trainerprofiledetails.scss'
 import { useEffect, useState } from 'react';
 import axiosInstance from '../../config/axiosconfig';
+import Loader from '../loader/loader';
 
 const TrainerProfileDetails = ({ username, onBack }) => {
     const [trainer, setTrainer] = useState(null);
     const [error, setError] = useState('');
     const [showDialog, setShowDialog] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const handleRemoveUser = async () => {
         try {
@@ -26,11 +28,17 @@ const TrainerProfileDetails = ({ username, onBack }) => {
             } catch (error) {
                 console.error('Error fetching trainer details:', error);
                 setError('Failed to fetch trainer details. Please try again.');
+            }finally{
+                setLoading(false);
             }
         };
 
         fetchTrainer();
     }, [username]);
+    if(loading){
+        return <Loader/>
+    }
+
 
     if (!trainer) {
         return (
@@ -41,6 +49,7 @@ const TrainerProfileDetails = ({ username, onBack }) => {
         );
     }
 
+ 
     return (
         <div className="trainer-profile-details">
             
@@ -49,7 +58,7 @@ const TrainerProfileDetails = ({ username, onBack }) => {
                 <h2>{trainer.fullName || 'N/A'}</h2>
                 <p>Username: {trainer.username}</p>
                 <p>Email: {trainer.email}</p>
-                <p>Phone: {trainer.phone}</p>
+                <p>Phone: {trainer.mobileNo}</p>
             </div>
             <button className="remove-user-button" onClick={() => setShowDialog(true)}>Remove User</button>
             {showDialog && (
